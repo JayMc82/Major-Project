@@ -2,13 +2,13 @@
  *                                                                                     *
  *                            Hotel Room Reservation System                            *
  *                                      Main.cpp                                       *
- * Developed By: Group 4                                                               *
- * Date:                                                                               * 
- * Members:                                                                            *
- * 	1)	                                                                               *
- * 	2)	                                                                               *
- * 	3)	                                                                               * 
- * 	4)	                                                                               *
+ * 		Developed By: Group 4                                                  *
+ * 		Date:                                                                  * 
+ * 		Members:                                                               *
+ * 		1)	                                                                               *
+ * 		2)	                                                                               *
+ * 		3)	                                                                               * 
+ * 		4)	                                                                               *
  * 		                                                                               *
  ***************************************************************************************
  *  Platform: Windows                                                                  *
