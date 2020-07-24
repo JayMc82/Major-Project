@@ -1,0 +1,433 @@
+/***************************************************************************************
+ *                                                                                     *
+ *                            Hotel Room Reservation System                            *
+ *                                      Main.cpp                                       *
+ * Developed By: Group 4                                                               *
+ * Date:                                                                               * 
+ * Members:                                                                            *
+ * 	1)	                                                                               *
+ * 	2)	                                                                               *
+ * 	3)	                                                                               * 
+ * 	4)	                                                                               *
+ * 		                                                                               *
+ ***************************************************************************************
+ *  Platform: Windows                                                                  *
+ *  Tested on Windows 7 															   *
+ *                                                                                     *
+ * 	Preamble:																		   *
+ * 		Since our tests were done on The Windows Operating System (OS) we utilised some*
+ * 		of the tools that are avaialble to the OS, such as Clearing the screen (cls) or*
+ *		Pausing the system (pause). This allows us to port the system to another OS    *
+ *		quite easily as all that would be required is to replace the "utilities.h" file*
+ *		with one that uses that Operating System's tools. 							   *
+ * 		                                                                               *
+ *	Program Description and Flow:                                                      *
+ *		The Hotel Reservation System will allow users to Add rooms, Change from        *
+ *		Non-Peak to Peak Period, Reserve a room and Display the details of all         *
+ * 		the rooms.	  																   *
+ * 		                                                                               *
+ * 		A Class HotelRoom is created to......                                          *
+ * 		                                                                               *
+ * 		An Array of HotelRoom (Rooms[]) is created to Store the details of the rooms.  *
+ * 		                                                                               *
+ * 		                                                                               *
+ * 		                                                                               *
+ * 	Functions:	                                                                       *
+ * 		Name: Add_Room()
+ 		Arguments: None                                                                *
+ * 		Return Valuie: None
+ *		Purpose:  Allows the User to Add Rooms                                         *
+ * 		                                                                               *
+ * 		Name: Create_Rooms()                                                           *
+ * 		Arguments: None                                                                *
+ * 		Return Value: None                                                             *
+ * 		Purpose: A Utility Function Created to Auto-Create Rooms as per the            *
+ * 		       	 instructions received.                                                *
+ * 		                                                                               *
+ * 		                                                                               *
+ * 		Name: Display_Rooms()                                                          *
+ * 		Arguments:                                                                     *
+ * 		Return Value:                                                                  *
+ *      Purpose:																	   *
+ * 		                                                                               *
+ * 		                                                                               * 
+ * 		Name: Find_Room()                                                              *
+ * 		Arguments: Integer                                                             *
+ * 		Return Value: Integer                                                          *
+ *      Purpose: A Utility Function used to Search the Array Rooms[] for valid Room    *
+ * 			     Numbers. If not found the Function returns -1. The Calling Function   *
+ * 		         evaluates the return value. If a valid Room Number is found it is     *
+ * 		         returned and used. However, if -1 is returned a n appropriate         *
+ * 		         is displaye to the user.
+ * 		                                                                               * 
+ * 		                                                                               *                                              *
+ * 		Name: Modify_Rooms                                                             *
+ * 		Arguments:                                                                     *
+ * 		Return Value:                                                                  *
+ *      Purpose:																	   *
+ * 		                                                                               *
+ * 		                                                                               *
+ * 		Name: Reserve_Room()                                                           *
+ * 		Arguments:                                                                     *
+ * 		Return Value:                                                                  *
+ *      Purpose:																	   *
+ * 		                                                                               *
+ * 		                                                                               *
+ * 		                                                                               *
+ * 		                                                                               *
+ ***************************************************************************************/
+
+#include <iostream>
+#include <string>
+#include "Hotels.h"
+#include "utilities.h"
+
+using namespace std;
+
+	//Function Prototypes
+	void Display_Rooms(bool);
+	int Find_Room(int);
+	
+	// Globals 
+	int RoomIdx = -1;			// used as Array Rooms index. Track the number of rooms added 
+	const int MaxRooms = 5; 	// maximum number of rooms avaialable
+	HotelRoom Rooms[MaxRooms]; 	// Declare Array of class HotelRoom
+	bool AppStartedTF = false;	// used to restrict some features until after the menu is fully displayed
+	
+	
+
+	
+		
+	void Add_Room()
+	{
+			HotelRoom rooms; // create an instance of the Class HotelRoom
+			
+			char yn = 'y'; // used to exit while loop
+			int idx = 0;
+			int roomNum;
+			int capaCity;
+			double raTe = 175;
+			string seaSon = "Peak";
+			char PN = 'P'; // Shortcut for peak. N for non-peak
+			
+			
+			if (RoomIdx >= MaxRooms-1)
+			{
+				cls();
+				cout << "Reached Maximum Rooms Available. Cannot add any more.\n";
+				pause();
+				yn='n'; // do not enter loop
+			} 
+					
+			while(yn =='y' || yn == 'Y')
+			{
+			
+				cls();
+			 	cout << "    ADD Room    \n";		 
+				cout << "Enter Room Number: "; cin >> roomNum;
+				cout << "Enter Capacity: "; cin >> capaCity;
+				cout << "Enter [P]-Peak, [N] - Non-Peak: "; cin >> PN;
+				//cout << "Enter Rate: "; cin >> raTe;
+				//cout << "Enter Season Peak, Non-Peak: "; cin >> seaSon;
+				
+				if (PN == 'N' || PN == 'n')
+				{
+					seaSon = "Non-Peak";
+					raTe = 150;
+				} else if (PN == 'P' || PN == 'p')
+				{
+					seaSon = "Peak";
+					raTe = 175;
+				} else {
+					cls();
+					cout << "Only P or N are valid entries!";
+					pause();
+					break;
+				}
+				
+				cls();
+				
+				// test if exceeds max rooms 
+				if (RoomIdx >= MaxRooms-1)
+				{
+					cls();
+					cout << "Reached Maximum Rooms Available. Cannot add any more.\n";
+					pause();
+					break;
+				}  else {
+					RoomIdx+=1; //increment Room index
+					idx = RoomIdx;
+					
+					Rooms[idx].Set_Number(roomNum);
+					Rooms[idx].Set_Rate(raTe);
+					Rooms[idx].Set_Capacity(capaCity);
+					Rooms[idx].Set_Rate(raTe);
+					Rooms[idx].Set_Season(seaSon);
+					Rooms[idx].Display() ;
+				}	
+					if (RoomIdx < MaxRooms-1)
+					{
+						cout << "\nDo Another?  (Any values other than [Y] or [y] will return to the Menu): "; cin >> yn;	
+					}else{
+						break;	
+					}
+			}
+	}
+	
+		
+	void Create_Rooms()
+	{
+		int idx = 0;
+		int roomNum[3]  = {349,147,100}; // create array for rooms
+		int capaCity[3] = {4,2,1};
+		double raTe[3]  = {150,175,150};
+		string seaSon[3] = {"Non-Peak","Peak","Non-Peak"};
+		
+		for (int idx= 0; idx<=2; idx++)
+		{
+			Rooms[idx].Set_Number(roomNum[idx]);
+			Rooms[idx].Set_Rate(raTe[idx]);
+			Rooms[idx].Set_Capacity(capaCity[idx]);
+			Rooms[idx].Set_Rate(raTe[idx]);
+			Rooms[idx].Set_Season(seaSon[idx]);
+			RoomIdx = idx;
+			
+			if (AppStartedTF==true) 
+			{
+				Rooms[idx].Display();
+			}
+		}
+	}
+	
+	
+		void Display_Rooms(bool pauseTF)
+	{
+		cls();
+	 	
+	 	cout << "============================================================\n"; //60
+		cout << "==                     Hotel West Side	                  ==\n";
+		cout << "==                           Rooms                        ==\n";
+		cout << "============================================================\n";
+		cout << " Room Number \t";
+		cout << "Capacity \t";
+		cout << "Rate \t";
+		cout << "Status \t";
+		cout << "Season \n";
+		
+		for (int i=0 ; i<MaxRooms; i++)
+		{
+			if (Rooms[i].Get_Number() > 0 )
+			{
+				cout << " " << Rooms[i].Get_Number() << "\t\t";
+				cout << Rooms[i].Get_Capacity() << "\t\t";
+				cout << Rooms[i].Get_Rate() << "\t";
+				cout << Rooms[i].Get_Status() << "\t";
+				cout << Rooms[i].Get_Season() << "\n";
+			}
+		}
+		
+		cout << "============================================================\n";
+			
+		if (pauseTF)
+		{
+			pause();
+		}
+	
+	}
+	
+	
+	
+	int Find_Room(int RoomNum)
+	/** use this function to search for valid room numbers **/
+	{
+		int rn = -1;
+		for (int i=0 ; i<MaxRooms; i++)
+		{
+			if (Rooms[i].Get_Number() == RoomNum)
+			{
+				rn = i;
+				break;
+			}
+		}
+			return rn;
+	}	
+	
+	
+	
+	void Modify_Room()
+	{
+		double raTe = 175;
+		string seaSon = "Peak";
+		
+		int numOfGuests =0;
+		int roomNum = 0;
+		int idx = -1;		// array index
+		int succEss = 0; 	// used to report success of Change_Rate
+		char yn = 'y'; 		// used to exit while loop
+		
+			
+		while(yn =='y' || yn == 'Y')
+		{
+				
+			cls();
+			//display rooms details for easy look up
+		    Display_Rooms(false); 
+		    
+			cout << "    MODIFY Room    \n";
+			cout << "Enter Room Number: "; cin >> roomNum;
+			cout << "Enter Number of Guests : "; cin >> numOfGuests;
+			
+			idx = Find_Room(roomNum);
+
+			if (idx >= 0) // test the index of the array returned 
+			{
+				if (numOfGuests > Rooms[idx].Get_Capacity())
+				{
+					cout << "\ntoo many persons for this room!\n\n";
+				} else {
+					Rooms[idx].Change_Rate(raTe); // change the room rate
+					Rooms[idx].Set_Season(seaSon);
+					Rooms[idx].Set_Status(numOfGuests);
+					Display_Rooms(true); // display the current status of all rooms
+				}
+			} else {
+				// if the test for index fails and returns -1 then the room number entered doesn't exist
+				// so inform the user that the number entered doesn't exist
+				cout << "\nInvalid room Number " << roomNum << "!\n\n";
+			}
+			
+			//cout << "\n\nDo Another?: "; cin >> yn;
+			cout << "\nDo Another?  (Any values other than [Y] or [y] will return to the Menu): "; cin >> yn;
+		}	
+		
+	}
+	
+	
+	void Reserve_Room()
+	{
+		int numOfGuests =0;
+		int roomNum = 0;
+		int idx = -1;		// array index
+		int succEss = 0; 	// used to report success of Change_Status
+		char yn = 'y'; 		// used to exit while loop
+		
+			
+		while(yn =='y' || yn == 'Y')
+		{
+				
+			cls();
+			
+			//display rooms details for easy look up
+		    Display_Rooms(false);
+			cout << " \n\n";
+			
+			cout << "    RESERVE Room    \n";
+			cout << "Enter Room Number: "; cin >> roomNum;
+			cout << "Enter number of Guests: "; cin >> numOfGuests;
+
+			idx = Find_Room(roomNum);
+
+			if (idx >= 0) // test the index of the array returned 
+			{
+				if (numOfGuests > Rooms[idx].Get_Capacity())
+				{
+					cout << "\ntoo many persons for this room!\n\n";
+				} else {
+					succEss = Rooms[idx].Change_Status(numOfGuests); // change the status of the room
+					if (succEss >= 0 )
+					{
+						Display_Rooms(true); // display the current status of all rooms
+					} else {
+						cout << "\nChanges Failed!!\n";
+					}
+				}
+			} else {
+				// if the test for index fails and returns -1 then the room number entered doesn't exist
+				// so inform the user that the number entered doesn't exist
+				cout << "\nInvalid room Number " << roomNum << "!\n\n";
+			}
+			
+			//cout << "\n\nDo Another?: "; cin >> yn;
+			cout << "\nDo Another?  (Any values other than [Y] or [y] will return to the Menu): "; cin >> yn;
+		}	
+	}
+	
+
+
+	
+	
+int main()
+{
+	int choice;
+    Create_Rooms(); // Auto Create some rooms. The function add rooms will add some more. 
+	
+	do
+	{
+		cls();
+		cout << "*******************************\n";
+		cout << "*       Hotel West Side       *\n";
+		cout << "*******************************\n";
+		cout << " 1. 	Add Room\n";
+		cout << " 2.	Reserve Room\n";
+		cout << " 3. 	Modify Room\n";
+		cout << " 4. 	View Room\n" ;
+		cout << " 5. 	Help\n";
+		cout << " 8. 	Exit\n";
+		cout << "*******************************\n";
+		cout << " Enter your choice and press return: ";
+		cin >> choice;
+	       
+	    if (choice == 0)
+	    {
+	    	// Used to test if anything other than an int within the
+			// allowable range has been entered. The program will 
+			// display a message and terminate.
+	    	cls();
+						
+			cout << "Not a Valid Choice. \n";
+			cout << "The Program wil Terminate.\n";
+			pause();
+			break;
+		}
+		
+		switch (choice)
+		{
+			case 1:
+				//code to add room
+				Add_Room();
+				break;
+			case 2:
+				//code to reserve room
+				Reserve_Room();
+				break;
+			case 3:
+				//code to modify room
+				Modify_Room();
+				break;
+			case 4:
+				//Display Rooms
+			  	Display_Rooms(true);
+				break;
+			case 5:
+				//code to Help 
+				break;
+			case 8:
+				cout << "End of Program.\n";
+				break;
+			default:
+				cls();
+						
+				cout << "Not a Valid Choice. \n";
+				cout << "The Program wil Terminate.\n";
+				
+				pause();
+				break;
+		}
+		
+		AppStartedTF = true; // only set to true after menu has been fully displayed
+
+	}while (choice !=8);
+	return 0;
+}
+
+
